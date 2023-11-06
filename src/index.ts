@@ -1,62 +1,62 @@
-import { io, Socket } from 'socket.io-client';
-
-// const DEPLOYED_HOST = '44.212.23.240:3001';
-// const LOCALHOST = 'http://localhost:3001';
+import { io, Socket } from "socket.io-client";
 
 type CallbackFunction = (...args: any[]) => void;
 
-export class Twine {
-	socket: Socket;
-	sessionId: string;
-
-	constructor(host: string) {
-		this.socket = io(host);
-		this.sessionId = localStorage.getItem('twineSessionId') || '';
-
-		this.socket.on('connect', () => {
-			this.socket.emit('sessionId', this.sessionId);
-		});
-
-		this.socket.on('setSessionId', (sessionId) => {
-			console.log('client session event: ' + sessionId);
-			localStorage.setItem('twineSessionId', sessionId);
-		})
-	}
-
-	connect() {
-		this.socket.connect();
-	}
-
-	disconnect() {
-		this.socket.disconnect();
-	}
-
-	subscribe(roomsToJoin: string[]) {
-		this.socket.emit('join', roomsToJoin);
-		// should change the listener on the server to `subscribe`
-		// should accept an array of strings instead of a single string
-	}
-
-	unsubscribe(roomsToLeave: string[]) {
-		this.socket.emit('leave', roomsToLeave);
-		// need to create a listener on the server to ctach this event and unsubscribe
-		// param should be an array of strings
-	}
-
-	listenFor(eventName: string, callback: CallbackFunction) {
-		this.socket.on(eventName, (payload) => {
-			callback(payload);
-		})
-	}
+type PayloadObj = {
+	room: string;
+	timestamp: number;
 }
 
-const twineConnection = new Twine('http://localhost:3001');
+export class Twine {
+  socket: Socket | undefined;
 
-twineConnection.disconnect();
-twineConnection.connect();
-twineConnection.subscribe(['A', 'B']);
-twineConnection.unsubscribe(['B']);
+  constructor(host: string) {
+    this.initializeTwine(host);
+  }
 
-twineConnection.listenFor('message', (payload) => {
-	console.log(payload);
-})
+  async initializeTwine(host: string) {
+    await fetch(`${host}/set-cookie`, { credentials: 'include' });
+
+    this.socket = io(host, {
+      withCredentials: true,
+      transports: ['websocket'],
+    });
+
+    this.socket.on('connect', async () => {
+      console.log('Connected to the Twine server');
+      await this.socket?.emit('stateRecovery');
+    });
+  }
+
+  connect() {
+    this.socket?.connect();
+  }
+
+  disconnect() {
+    this.socket?.disconnect();
+  }
+
+  subscribe(roomsToJoin: string[]) {
+    this.socket?.emit('subscribe', roomsToJoin);
+    this.socket?.on("roomJoined", (msg: string) => console.log(msg))
+  }
+
+  unsubscribe(roomsToLeave: string[]) {
+    this.socket?.emit('unsubscribe', roomsToLeave);
+    this.socket?.on("roomLeft", (msg: string) => console.log(msg))
+  }
+
+  async listenOn(roomName: string, callback: CallbackFunction) {
+    const id = setInterval(() => {
+      if (this.socket) {
+        this.socket.on("message", (payload: PayloadObj) => {
+          if (payload.room === roomName) {
+            callback(payload);
+            this.socket?.emit("updateSessionTS", payload.timestamp);
+          }
+        });
+        clearInterval(id);
+      }
+    }, 100);
+  }
+}
