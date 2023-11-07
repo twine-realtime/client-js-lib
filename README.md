@@ -29,7 +29,7 @@ Once the constructor has been invoked, a connection is established with your Twi
 
 ## Usage
 
-### The connect & disconnect methods
+### connect & disconnect
 
 Your `twine-client-lib` instance will automatically connect with the server, but if you need to manually connect/disconnect the `connect` and disconnect` methods will do just that:
 
