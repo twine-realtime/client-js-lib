@@ -35,11 +35,11 @@ Your `twine-client-lib` instance will automatically connect with the server, but
 
 ```js
 disconnectBtn.addEventListener('click', (e) => {
-	e.preventDefault();
-	twine.disconnect();
-	setTimeout(() => {
-		twine.connect();
-	}, 10000)
+  e.preventDefault();
+  twine.disconnect();
+  setTimeout(() => {
+    twine.connect();
+  }, 10000)
 });
 ```
 
@@ -49,8 +49,8 @@ The `subscribe` method takes a single `room_id` (string) as an argument and subs
 
 ```js
 dropdown.addEventListener('change', () => {
-	const selected = dropdown.value;
-	twineClient.subscribe(selected);
+  const selected = dropdown.value;
+  twineClient.subscribe(selected);
 });
 ```
 
@@ -60,8 +60,8 @@ The `unsubscribe` method takes a single `room_id` (string) as an argument and un
 
 ```js
 dropdown.addEventListener('change', () => {
-	const selected = dropdown.value;
-	twineClient.unsubscribe(selected);
+  const selected = dropdown.value;
+  twineClient.unsubscribe(selected);
 });
 ```
 
@@ -71,7 +71,7 @@ The `listenOn` method takes a single `room_id` (string) and a callback function 
 
 ```js
 twineClient.listenOn("room A", (data) => {
-	console.log(data)
+  console.log(data)
   // code will be executed everytime an event with a matching `room_id` occurs
 });
 ```
