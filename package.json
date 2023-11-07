@@ -9,7 +9,7 @@
     "start": "nodemon ./src/index.js",
     "watch": "tsc -w"
   },
-  "author": "",
+  "author": "Twine Realtime",
   "license": "ISC",
   "dependencies": {
     "nodemon": "^3.0.1",
