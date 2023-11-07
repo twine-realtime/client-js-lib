@@ -1,6 +1,6 @@
 {
   "name": "twine-client-library",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A client library for working with Twine Realtime Service",
   "main": "dist/index.js",
   "type": "module",
