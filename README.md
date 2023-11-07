@@ -13,7 +13,7 @@ npm install twine-client-lib
 and then require the module:
 
 ```js
-import Twine from "twine-client-lib";
+import TwineClientLibrary from "twine-client-lib";
 ```
 
 ## Initialization
