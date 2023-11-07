@@ -4,10 +4,10 @@ The `twine-client-library` package allows users to interact with their Twine Rea
 
 ## Installation
 
-Copy this code into your JavaScript code:
+Copy this code into your JavaScript code as an ES module package:
 
 ```js
-import TwineClientLibrary from 'https://cdn.jsdelivr.net/npm/twine-client-library@1.0.0/+esm';
+import TwineClientLibrary from 'https://cdn.jsdelivr.net/npm/twine-client-library@1.0/+esm';
 ```
 
 ## Initialization
