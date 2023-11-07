@@ -67,7 +67,7 @@ dropdown.addEventListener('change', () => {
 
 ## listenOn
 
-The `listenOn` method takes a single `room_id` (string) and a callback function as arguments. The method will then listen for incoming messages to the `room_id` specified. When a message arrives that matches the `room_id` passed to `listenOn`, the `callback` function will be invoked. 
+The `listenOn` method takes a `room_id` (string) and a callback function as arguments. The method will then listen for incoming messages to the `room_id` specified. When a message arrives that matches the `room_id` passed to `listenOn`, the `callback` function will be invoked. 
 
 ```js
 twineClient.listenOn("room A", (data) => {
