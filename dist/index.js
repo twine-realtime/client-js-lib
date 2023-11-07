@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { io } from "socket.io-client";
-export class Twine {
+export class TwineClientLibrary {
     constructor(host) {
         this.initializeTwine(host);
     }
