@@ -7,7 +7,7 @@ type PayloadObj = {
 	timestamp: number;
 }
 
-export class TwineClientLibrary {
+export default class TwineClientLibrary {
   socket: Socket | undefined;
 
   constructor(host: string) {
