@@ -7,7 +7,7 @@ type PayloadObj = {
 	timestamp: number;
 }
 
-export class Twine {
+export class TwineClientLibrary {
   socket: Socket | undefined;
 
   constructor(host: string) {
@@ -36,12 +36,12 @@ export class Twine {
     this.socket?.disconnect();
   }
 
-  subscribe(roomsToJoin: string[]) {
+  subscribe(roomsToJoin: string) {
     this.socket?.emit('subscribe', roomsToJoin);
     this.socket?.on("roomJoined", (msg: string) => console.log(msg))
   }
 
-  unsubscribe(roomsToLeave: string[]) {
+  unsubscribe(roomsToLeave: string) {
     this.socket?.emit('unsubscribe', roomsToLeave);
     this.socket?.on("roomLeft", (msg: string) => console.log(msg))
   }
