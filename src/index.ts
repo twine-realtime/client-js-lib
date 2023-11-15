@@ -19,7 +19,7 @@ export default class TwineClientLibrary {
 
     this.socket = io(host, {
       withCredentials: true,
-      transports: ['websocket'],
+      transports: ['websocket', 'polling'],
     });
 
     this.socket.on('connect', async () => {
