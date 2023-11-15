@@ -17,7 +17,7 @@ export default class TwineClientLibrary {
             yield fetch(`${host}/set-cookie`, { credentials: 'include' });
             this.socket = io(host, {
                 withCredentials: true,
-                transports: ['websocket'],
+                transports: ['websocket', 'polling'],
             });
             this.socket.on('connect', () => __awaiter(this, void 0, void 0, function* () {
                 var _a;
